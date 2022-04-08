@@ -1,12 +1,19 @@
+import IStructure from "../../interfaces/IStructure";
 import SimpleNode from "../../core/SimpleNode";
 
-class LinkedStack<T extends Object> {
+class LinkedStack<T extends Object> implements IStructure<T> {
   private cursor: SimpleNode<T> | null;
   private size: number;
 
   constructor() {
     this.cursor = null;
     this.size = 0;
+  }
+
+  static fromArray<K extends Object>(array: K[]) {
+    const linkedStack = new LinkedStack();
+    array.forEach((item) => linkedStack.push(item));
+    return linkedStack;
   }
 
   push(value: T) {
@@ -25,12 +32,16 @@ class LinkedStack<T extends Object> {
     return deletedValue;
   }
 
+  isEmpty() {
+    return this.size === 0;
+  }
+
   getSize() {
     return this.size;
   }
 
   toArray() {
-    if (!this.cursor) return `${LinkedStack.name} is empty`;
+    if (!this.cursor) return [];
     let current = this.cursor;
     const content: T[] = [];
     while (current) {
@@ -38,7 +49,6 @@ class LinkedStack<T extends Object> {
       content.push(value);
       current = current.getNext() as SimpleNode<T>;
     }
-
     return content;
   }
 }

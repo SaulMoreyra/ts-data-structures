@@ -34,4 +34,19 @@ describe("Should insert and remove values", () => {
     const array = stack.toArray();
     expect(array instanceof Array).toBeTruthy();
   });
+
+  test("convert array to linked stack", () => {
+    const array = [1, 3, 4, 5];
+    const stack = LinkedStack.fromArray(array);
+    expect(stack instanceof LinkedStack).toBeTruthy();
+    const lastItem = stack.pop();
+    expect(lastItem).toBe(array.pop());
+  });
+
+  test("empty should return correct form", () => {
+    const stack = new LinkedStack();
+    expect(stack.isEmpty()).toBeTruthy();
+    stack.push(3);
+    expect(stack.isEmpty()).toBeFalsy();
+  });
 });
